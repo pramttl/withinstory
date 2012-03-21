@@ -5,6 +5,7 @@
         <script src="{{ STATIC_URL }}js/json2.js"></script>
         <script src="{{ STATIC_URL }}js/underscore-min.js"></script>
         <script src="{{ STATIC_URL }}js/backbone-min.js"></script>
+        <script src="{{ STATIC_URL }}js/tiny_mce/tiny_mce.js"></script>
     </head>
     <body>
         <script>
@@ -12,6 +13,16 @@
             var username;
             var useruri;
             var apiUrl = '/api/v1/';
+            function setupTinyMCE() {
+                tinyMCE.init({
+                    theme: 'advanced',
+                    mode: 'textareas',
+                    theme_advanced_toolbar_location : 'top',
+                    theme_advanced_toolbar_align : 'left',
+                    theme_advanced_statusbar_location : 'bottom',
+                    theme_advanced_resizing : true
+                });
+            }
             $(function(){
                 window.User = Backbone.Model.extend({
                     urlRoot: apiUrl + 'userprofile/'
@@ -48,7 +59,7 @@
                         this.model.set({
                             'title': $('#title').val(),
                             'introduction': $('#introduction').val(),
-                            'body': $('#body').val()
+                            'body': tinyMCE.activeEditor.getContent()
                         });
                         this.model.save({'author': useruri}, {
                             'headers': auth.headers,
@@ -104,6 +115,7 @@
                     newStory: function() {
                         this.newStoryView = new StoryDetailView({'model': new Story()});
                         $('#content').html(this.newStoryView.render().el);
+                        setupTinyMCE();
                     },
                     setup: function(callback, obj) {
                         if (this.storyCollection && this.userCollection) {
@@ -143,6 +155,7 @@
                             });
                             if (model) {
                                 $('#content').html(new StoryDetailView({model: model}).render().el);
+                                setupTinyMCE();
                             }
                         }, this);
                     }
