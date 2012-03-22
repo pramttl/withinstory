@@ -1,7 +1,11 @@
 withinstory/templates/assets/*
 *.pyc
 *.pyo
-*.py~
+*.*~
 .project
 .pydevproject
-
+withinstory/withinstory.db
+withinstory/build*
+.gitignore
+withinstory/settings1.py
+withinstory/s.sh

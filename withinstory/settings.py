@@ -1,4 +1,5 @@
 # Django settings for withinstory project.
+
 import os
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -126,7 +127,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    
     'gunicorn',
     'tastypie',
     'withinstory.app',
